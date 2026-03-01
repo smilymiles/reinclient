@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rein Client | Minecraft Hacked Client</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080a0f;
+      --bg2: #0d1018;
+      --bg3: #111520;
+      --accent: #5b6ef5;
+      --accent2: #7f8fff;
+      --accent-glow: rgba(91,110,245,0.35);
+      --text: #e8eaf6;
+      --muted: #6b7280;
+      --border: rgba(91,110,245,0.18);
+      --card: rgba(255,255,255,0.03);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 60px;
+      background: rgba(8,10,15,0.75);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+    .nav-logo span { color: var(--accent2); }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #fff !important;
+      padding: 9px 22px;
+      border-radius: 8px;
+      font-weight: 600 !important;
+      font-size: 0.88rem !important;
+      transition: background 0.2s, box-shadow 0.2s !important;
+      box-shadow: 0 0 18px var(--accent-glow);
+    }
+    .nav-cta:hover { background: var(--accent2) !important; box-shadow: 0 0 28px var(--accent-glow) !important; }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 140px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 900px; height: 600px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(91,110,245,0.22) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(91,110,245,0.12);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 0.8rem;
+      color: var(--accent2);
+      font-weight: 500;
+      margin-bottom: 28px;
+      animation: fadeUp 0.7s ease both;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 7px; height: 7px;
+      background: var(--accent2);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+
+    .hero h1 .gradient {
+      background: linear-gradient(135deg, #fff 30%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 500px;
+      margin: 0 auto 42px;
+      font-weight: 300;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      box-shadow: 0 0 30px var(--accent-glow);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px var(--accent-glow); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--accent); background: rgba(91,110,245,0.08); }
+
+    /* ===== SCROLL MARQUEE ===== */
+    .marquee-section {
+      padding: 40px 0;
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(to right, var(--bg) 0%, transparent 10%, transparent 90%, var(--bg) 100%);
+      position: relative;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 60px;
+      animation: marquee 22s linear infinite;
+      width: max-content;
+    }
+
+    .marquee-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .marquee-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ===== SECTION COMMON ===== */
+    section { padding: 100px 60px; }
+
+    .section-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 500px;
+      font-weight: 300;
+    }
+
+    /* ===== FEATURES ===== */
+    #features {
+      background: var(--bg2);
+      position: relative;
+    }
+
+    .features-header { margin-bottom: 70px; }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .feature-card {
+      background: var(--bg2);
+      padding: 40px 36px;
+      transition: background 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card:hover { background: var(--bg3); }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .feature-card:hover::before { opacity: 1; }
+
+    .feature-icon {
+      width: 46px; height: 46px;
+      background: rgba(91,110,245,0.12);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+    }
+
+    .feature-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .feature-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.65; }
+
+    /* ===== STATS ===== */
+    #stats {
+      background: var(--bg);
+      text-align: center;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 60px;
+    }
+
+    .stat-card {
+      background: var(--bg);
+      padding: 50px 30px;
+    }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--accent2);
+      letter-spacing: -2px;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    #how {
+      background: var(--bg2);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-top: 60px;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 36px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      transition: border-color 0.25s;
+    }
+    .step:hover { border-color: var(--accent); }
+
+    .step-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .step h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .step p { color: var(--muted); font-size: 0.9rem; }
+
+    /* ===== PRICING ===== */
+    #pricing {
+      background: var(--bg);
+      text-align: center;
+    }
+
+    .pricing-cards {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      margin-top: 60px;
+      flex-wrap: wrap;
+    }
+
+    .pricing-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 44px 40px;
+      width: 320px;
+      text-align: left;
+      position: relative;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .pricing-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+    .pricing-card.featured {
+      border-color: var(--accent);
+      background: linear-gradient(160deg, rgba(91,110,245,0.08), var(--bg2));
+      box-shadow: 0 0 50px rgba(91,110,245,0.15);
+    }
+
+    .pricing-tag {
+      position: absolute;
+      top: -13px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 100px;
+    }
+
+    .pricing-tier {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 20px;
+    }
+
+    .pricing-price {
+      font-family: 'Syne', sans-serif;
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: -2px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .pricing-price sub { font-size: 1.2rem; letter-spacing: 0; font-weight: 600; vertical-align: top; margin-top: 8px; }
+
+    .pricing-period { color: var(--muted); font-size: 0.85rem; margin-bottom: 28px; }
+
+    .pricing-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 34px;
+    }
+
+    .pricing-features li {
+      font-size: 0.88rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .pricing-features li::before {
+      content: '✓';
+      color: var(--accent2);
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+
+    .pricing-btn {
+      display: block;
+      text-align: center;
+      padding: 13px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .pricing-btn-outline {
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .pricing-btn-outline:hover { border-color: var(--accent); background: rgba(91,110,245,0.08); }
+    .pricing-btn-fill {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 24px var(--accent-glow);
+    }
+    .pricing-btn-fill:hover { background: var(--accent2); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 60px;
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+    }
+
+    .footer-brand h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .footer-brand h2 span { color: var(--accent2); }
+    .footer-brand p { color: var(--muted); font-size: 0.88rem; max-width: 280px; line-height: 1.7; }
+
+    .footer-col h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+    .footer-col a { color: var(--muted); text-decoration: none; font-size: 0.88rem; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--text); }
+
+    .footer-bottom {
+      margin-top: 50px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      nav { padding: 18px 24px; }
+      .nav-links { display: none; }
+      section { padding: 70px 24px; }
+      .features-grid, .steps, .stats-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 36px; }
+      footer { padding: 48px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#"><span>Rein</span> Client</a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">Get Started</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="https://discord.gg/" target="_blank">Discord</a></li>
+    <li><a href="#pricing" class="nav-cta">Download →</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">Built for Minecraft 1.8.9</div>
+  <h1><span class="gradient">Rein Client.</span><br>Dominate every server.</h1>
+  <p>The next-generation Minecraft hacked client. Bypass the biggest servers, stay undetected, and play your way.</p>
+  <div class="hero-btns">
+    <a href="#pricing" class="btn-primary">Download Free →</a>
+    <a href="#features" class="btn-secondary">See Features</a>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <!-- Two copies for seamless loop -->
+    <span class="marquee-item"><span class="marquee-dot"></span>Hypixel</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>CubeCraft</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>BlocksMC</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Mineplex</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Jartex</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>InvadedLands</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Pika Network</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>FadeCloud</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Hypixel</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>CubeCraft</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>BlocksMC</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Mineplex</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Jartex</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>InvadedLands</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Pika Network</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>FadeCloud</span>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="features-header reveal">
+    <div class="section-label">Features</div>
+    <h2 class="section-title">Everything you need to win.</h2>
+    <p class="section-sub">Packed with powerful modules, all finely tuned to keep you ahead of the anticheat.</p>
+  </div>
+  <div class="features-grid reveal">
+    <div class="feature-card">
+      <div class="feature-icon">🛡️</div>
+      <h3>Anticheat Bypass</h3>
+      <p>State-of-the-art bypasses for NCP, AAC, Grim, Watchdog, and more — updated with every patch.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>KillAura & Combat</h3>
+      <p>Smooth, configurable KillAura with reach, rotation, and swing options designed to look legit.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌊</div>
+      <h3>Movement Modules</h3>
+      <p>Speed, BHop, Fly, and more — each carefully crafted to slip past watchful server plugins on 1.8.9.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎨</div>
+      <h3>Custom ClickGUI</h3>
+      <p>A sleek, customizable GUI. Drag, resize, and theme your HUD to match your style.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📦</div>
+      <h3>Config Profiles</h3>
+      <p>Save unlimited configs and switch between setups for different servers in one click.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔄</div>
+      <h3>Auto Updates</h3>
+      <p>Rein updates silently in the background. You always have the latest bypasses without doing anything.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="reveal">
+    <div class="section-label">By the numbers</div>
+    <h2 class="section-title">Trusted by the community.</h2>
+  </div>
+  <div class="stats-grid reveal">
+    <div class="stat-card">
+      <div class="stat-num">50+</div>
+      <div class="stat-label">Modules included</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">1.8.9</div>
+      <div class="stat-label">Version support</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">99.9%</div>
+      <div class="stat-label">Uptime guarantee</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">Free</div>
+      <div class="stat-label">Base tier forever</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="reveal">
+    <div class="section-label">Get Started</div>
+    <h2 class="section-title">Up and running in minutes.</h2>
+    <p class="section-sub">No complicated setup. Download, inject, play.</p>
+  </div>
+  <div class="steps reveal">
+    <div class="step">
+      <div class="step-num">Step 01</div>
+      <h3>Download Rein</h3>
+      <p>Grab the latest .jar from the download page. No installer needed — it's a single file.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">Step 02</div>
+      <h3>Add to Minecraft</h3>
+      <p>Drop the jar into your mods folder or use the built-in Forge profile for 1.8.9. Launch as normal.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">Step 03</div>
+      <h3>Open the GUI & Play</h3>
+      <p>Press Right Shift in-game to open the ClickGUI. Enable your modules and join your favourite server.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="reveal">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">Pick your plan.</h2>
+    <p class="section-sub">Start for free. Upgrade when you're ready for the full experience.</p>
+  </div>
+  <div class="pricing-cards reveal">
+    <div class="pricing-card">
+      <div class="pricing-tier">Free</div>
+      <div class="pricing-price"><sub>$</sub>0</div>
+      <div class="pricing-period">forever free</div>
+      <ul class="pricing-features">
+        <li>30+ core modules</li>
+        <li>Basic anticheat bypass</li>
+        <li>ClickGUI & HUD</li>
+        <li>Config saving</li>
+        <li>Community support via Discord</li>
+      </ul>
+      <a href="#" class="pricing-btn pricing-btn-outline">Download Free</a>
+    </div>
+    <div class="pricing-card featured">
+      <div class="pricing-tag">Most Popular</div>
+      <div class="pricing-tier">Premium</div>
+      <div class="pricing-price"><sub>$</sub>9.99</div>
+      <div class="pricing-period">one-time / lifetime</div>
+      <ul class="pricing-features">
+        <li>Everything in Free</li>
+        <li>Better anticheat bypasses</li>
+        <li>Exclusive premium modules</li>
+        <li>Script API access</li>
+        <li>Full HUD modification</li>
+        <li>Priority Discord support</li>
+      </ul>
+      <a href="#" class="pricing-btn pricing-btn-fill">Buy Now →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h2><span>Rein</span> Client</h2>
+      <p>The next-generation Minecraft hacked client. Built for performance, built to bypass.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Product</h4>
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#">Changelog</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Community</h4>
+      <ul>
+        <li><a href="https://discord.gg/" target="_blank">Discord</a></li>
+        <li><a href="#">Report a Bug</a></li>
+        <li><a href="#">Wiki</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Refund Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Rein Client. All rights reserved.</span>
+    <span>Not affiliated with Mojang or Microsoft.</span>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+</script>
+</body>
+</html>
